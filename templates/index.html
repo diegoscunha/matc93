@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Web Semantica</title>
+		<title>Web Semântica</title>
 		<link rel="stylesheet" href="static/css/bulma.min.css">
 		<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 		<script src="static/js/jquery-3.3.1.min.js"></script>
@@ -13,10 +14,10 @@
 			  <div class="hero-body">
 				<div class="container">
 				  <h1 class="title">
-					MATC93 - Introducao a Web Semantica
+					MATC93 - Introdução a Web Semântica
 				  </h1>
 				  <h2 class="subtitle">
-					Analise de Texto com Sparql
+					Análise de Texto com Sparql
 				  </h2>
 				</div>
 			  </div>
@@ -26,11 +27,11 @@
 				<div class="media-content">
 					<div class="field">
 						<div class="control has-icons-left">
-							<div id="sel_lingua" class="select is-small">
-								<select id="lingua">
-								  <option value="" selected>Lingua</option>
-								  <option value="en">Ingles</option>
-								  <option value="pt">Portugues</option>
+							<div id="sel_idioma" class="select is-small">
+								<select id="idioma">
+								  <option value="" selected>Idioma</option>
+								  <option value="en">Inglês</option>
+								  <option value="pt">Português</option>
 								</select>
 							</div>
 							<span class="icon is-small is-left">
@@ -59,16 +60,16 @@
 		<script>
 			$(document).ready(function() {
 				$('#enviar').click(function() {
-					if($('#lingua').val()!='' && $('#texto').val()!='') {
-						$('#sel_lingua').removeClass('is-danger');
+					if($('#idioma').val()!='' && $('#texto').val()!='') {
+						$('#sel_idioma').removeClass('is-danger');
 						$('#texto').removeClass('is-danger');
 						$('#enviar').addClass('is-loading');
-						lingua = $('#lingua').val();
+						idioma = $('#idioma').val();
 						texto = $('#texto').val();
 						$.ajax({
 							type: 'post',
 							url: '/analisar',
-							data: {lingua: lingua, texto: texto},
+							data: {idioma: idioma, texto: texto},
 							async: false,
 							success: function(data){
 								console.log(data);
@@ -80,10 +81,10 @@
 						});
 						$('#enviar').removeClass('is-loading');
 					} else {
-						if($('#lingua').val()=='')
-							$('#sel_lingua').addClass('is-danger');
+						if($('#idioma').val()=='')
+							$('#sel_idioma').addClass('is-danger');
 						else
-							$('#sel_lingua').removeClass('is-danger');
+							$('#sel_idioma').removeClass('is-danger');
 							
 						if($('#texto').val()=='')
 							$('#texto').addClass('is-danger');

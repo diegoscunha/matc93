@@ -4,13 +4,14 @@
 import nltk
 from nltk.corpus import stopwords
 
-stopwords_en = stopwords.words('english')
-stopwords_pt = stopwords.words('portuguese')
-
-def remove_stopwords(texto):
+def remove_stopwords(texto, idioma):
 	# separando as palavras em tokens
 	tokens = nltk.word_tokenize(texto)
-	filtered_tokens = [word for word in tokens if word not in stopwords_en]
+	if idioma=='pt':
+		stopwords_txt = stopwords.words('portuguese')
+	else:
+		stopwords_txt = stopwords.words('english')
+	filtered_tokens = [word for word in tokens if word not in stopwords_txt]
 	return filtered_tokens
 
 def refine(tokens):

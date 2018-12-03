@@ -14,12 +14,12 @@ def index():
 	
 @app.route("/analisar", methods=['POST'])
 def analisar():
-	lingua = request.form['lingua']
+	idioma = request.form['idioma']
 	texto = request.form['texto']
 	#texto = """He is best known as the author of MINIX, a free Unix-like operating system for teaching purposes, and for his computer science textbooks, regarded as standard texts in the field."""
-	filtro = pln.remove_stopwords(texto)
+	filtro = pln.remove_stopwords(texto, idioma)
 	final = pln.refine(filtro)
-	return render_template('teste.html')
+	return render_template('resultado.html', resultado=str(final))
 	
 if __name__ == '__main__':
 	app.run(debug=True)
