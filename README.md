@@ -6,7 +6,7 @@ Projeto MATC93
 * Flask
 	pip install Flask
 * ntltk
-	pip install nltk
+	```pip install nltk```
 * SPARQLWrapper
 	pip install SPARQLWrapper
 
