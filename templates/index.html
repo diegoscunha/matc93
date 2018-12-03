@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Web Semantica</title>
+		<link rel="stylesheet" href="static/css/bulma.min.css">
+		<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+		<script src="static/js/jquery-3.3.1.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<section class="hero is-info">
+			  <div class="hero-body">
+				<div class="container">
+				  <h1 class="title">
+					MATC93 - Introducao a Web Semantica
+				  </h1>
+				  <h2 class="subtitle">
+					Analise de Texto com Sparql
+				  </h2>
+				</div>
+			  </div>
+			</section>
+			<br>
+			<article class="media">
+				<div class="media-content">
+					<div class="field">
+						<div class="control has-icons-left">
+							<div id="sel_lingua" class="select is-small">
+								<select id="lingua">
+								  <option value="" selected>Lingua</option>
+								  <option value="en">Ingles</option>
+								  <option value="pt">Portugues</option>
+								</select>
+							</div>
+							<span class="icon is-small is-left">
+								<i class="fas fa-globe"></i>
+							</span>
+						</div>
+					</div>
+					<div class="field">
+						<p class="control">
+							<textarea id="texto" maxlength="280" class="textarea is-small" placeholder="Adicione um texto..."></textarea>
+						</p>
+					</div>
+					<nav class="level">
+						<div class="level-left">
+							<div class="level-item">
+							  <a id="enviar" class="button is-info is-small">Enviar</a>
+							</div>
+						</div>
+					</nav>
+					<div id="resultado" class="level">
+					
+					</div>
+				</div>
+			</article>
+		</div>
+		<script>
+			$(document).ready(function() {
+				$('#enviar').click(function() {
+					if($('#lingua').val()!='' && $('#texto').val()!='') {
+						$('#sel_lingua').removeClass('is-danger');
+						$('#texto').removeClass('is-danger');
+						$('#enviar').addClass('is-loading');
+						lingua = $('#lingua').val();
+						texto = $('#texto').val();
+						$.ajax({
+							type: 'post',
+							url: '/analisar',
+							data: {lingua: lingua, texto: texto},
+							async: false,
+							success: function(data){
+								console.log(data);
+								$('#resultado').html(data);
+							},
+							error: function(msg){
+								alert('Error: ' + msg);
+							}
+						});
+						$('#enviar').removeClass('is-loading');
+					} else {
+						if($('#lingua').val()=='')
+							$('#sel_lingua').addClass('is-danger');
+						else
+							$('#sel_lingua').removeClass('is-danger');
+							
+						if($('#texto').val()=='')
+							$('#texto').addClass('is-danger');
+						else
+							$('#texto').removeClass('is-danger');
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
