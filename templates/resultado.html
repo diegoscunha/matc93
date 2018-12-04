@@ -1,3 +1,25 @@
-<div>
-	{{ resultado }}
-</div>
+<section class="section">
+    <div class="container">
+      <h1 class="title">Texto analisado</h1>
+      <h2 class="subtitle">
+        {{ texto|safe }}
+      </h2>
+	  <table class="table">
+		<thead>
+			<tr>
+				<th>Token</th>
+				<th>Comentário</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for key, value in resultado.items() %}
+			<tr>
+				<td><span class="tag is-success">{{ key }}</span></td>
+				<td>{{ value }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	  </table>
+    </div>
+</section>
+	
