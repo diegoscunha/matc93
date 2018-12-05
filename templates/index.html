@@ -5,8 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Web Semântica</title>
 		<link rel="stylesheet" href="static/css/bulma.min.css">
+		<link rel="stylesheet" href="static/css/jquery.loading.min.css">
 		<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 		<script src="static/js/jquery-3.3.1.min.js"></script>
+		<script src="static/js/jquery.loading.js"></script>
 	</head>
 	<body>
 		<div class="container">
@@ -25,32 +27,34 @@
 			<br>
 			<article class="media">
 				<div class="media-content">
-					<div class="field">
-						<div class="control has-icons-left">
-							<div id="sel_idioma" class="select is-small">
-								<select id="idioma">
-								  <option value="" selected>Idioma</option>
-								  <option value="en">Inglês</option>
-								  <option value="pt">Português</option>
-								</select>
-							</div>
-							<span class="icon is-small is-left">
-								<i class="fas fa-globe"></i>
-							</span>
-						</div>
-					</div>
-					<div class="field">
-						<p class="control">
-							<textarea id="texto" maxlength="280" class="textarea is-small" placeholder="Adicione um texto..."></textarea>
-						</p>
-					</div>
-					<nav class="level">
-						<div class="level-left">
-							<div class="level-item">
-							  <a id="enviar" class="button is-info is-small">Enviar</a>
+					<form id="form-texto" action="" method="post">
+						<div class="field">
+							<div class="control has-icons-left">
+								<div id="sel_idioma" class="select is-small">
+									<select id="idioma" name="idioma">
+									  <option value="" selected>Idioma</option>
+									  <option value="en">Inglês</option>
+									  <option value="pt">Português</option>
+									</select>
+								</div>
+								<span class="icon is-small is-left">
+									<i class="fas fa-globe"></i>
+								</span>
 							</div>
 						</div>
-					</nav>
+						<div class="field">
+							<p class="control">
+								<textarea id="texto" name="texto" maxlength="280" class="textarea is-small" placeholder="Adicione um texto..."></textarea>
+							</p>
+						</div>
+						<nav class="level">
+							<div class="level-left">
+								<div class="level-item">
+								  <button id="enviar" class="button is-info is-small" type="submit">Enviar</button>
+								</div>
+							</div>
+						</nav>
+					</form>
 					<div id="resultado" class="level">
 					
 					</div>
@@ -59,27 +63,28 @@
 		</div>
 		<script>
 			$(document).ready(function() {
-				$('#enviar').click(function() {
+				$('#enviar').click(function(event) {
+					event.preventDefault();
+					$('#enviar').addClass('is-loading');
+					$('#resultado').html('');
 					if($('#idioma').val()!='' && $('#texto').val()!='') {
 						$('#sel_idioma').removeClass('is-danger');
 						$('#texto').removeClass('is-danger');
-						$('#enviar').addClass('is-loading');
-						idioma = $('#idioma').val();
-						texto = $('#texto').val();
+						params = $('#form-texto').serialize();
 						$.ajax({
 							type: 'post',
 							url: '/analisar',
-							data: {idioma: idioma, texto: texto},
+							data: params,
 							async: false,
 							success: function(data){
-								console.log(data);
 								$('#resultado').html(data);
 							},
 							error: function(msg){
+								console.log('Error: ' + msg);
 								alert('Error: ' + msg);
 							}
 						});
-						$('#enviar').removeClass('is-loading');
+						
 					} else {
 						if($('#idioma').val()=='')
 							$('#sel_idioma').addClass('is-danger');
@@ -91,6 +96,7 @@
 						else
 							$('#texto').removeClass('is-danger');
 					}
+					$('#enviar').removeClass('is-loading');
 				});
 			});
 		</script>
