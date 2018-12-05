@@ -10,7 +10,7 @@ Projeto MATC93
 * SPARQLWrapper
 	```pip install SPARQLWrapper```
 
-#Executar
+# Executar
 Dentro do diretório do projeto executar
 ```python app.py```
 
